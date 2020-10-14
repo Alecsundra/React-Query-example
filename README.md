@@ -1,3 +1,10 @@
+A basic example for a React set up using `React Query` - a package that helps with state management of asynchronous data
+### npm i --save react-query . 
+To inspect what's happening in the fetching background, using `React Query Devtools` 
+### npm i --save react-query-devtools
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
