@@ -2,27 +2,33 @@ import React from 'react';
 import Planet from './Planet';
 import { useQuery } from 'react-query';
 
-const fetchPlanets = async () =>{
-    const res = await fetch('http://swapi.dev/api/planets/');
+const fetchPlanets = async (key, hey,page) =>{
+    console.log(hey)
+    const res = await fetch(`http://swapi.dev/api/planets/?page=${page}`);
     return res.json();
 }
-
+//query var, pass any data taht we want to use inside the fetch function
+//first transform the first arg into an array, the first el will remain the key, second it what you want
+//2nd we pass it inside the fetching function as parameters
 const Planets = () => {
+    const [page, setPage] = React.useState(1);
     // 1st arg- key for the query
     // 2nd arg -function async that is grabbing the data
-    const {data, status}= useQuery('planets', fetchPlanets, {
+    const {data, status}= useQuery(['planets','hello world',page ], fetchPlanets, {
         //stays fresh longer, before refetch stale data (from 0 to 2000)
         staleTime: 0,
         //by default is using cashed data, seting it in the config, it refetching data everytime you change the page
-        cacheTime: 10,
+        // cacheTime: 10,
         //we can use function(as a value) on specific data status fetching, for user notification or other
-        onSuccess: ()=>console.log('data fetched perfectly')
+        // onSuccess: ()=>console.log('data fetched perfectly')
     })
     console.log(data)
     return (
     <div>
       <h2>Planets</h2>
-      {/* <p>{status}</p> */}
+     <button onClick ={()=> setPage(1)}>Page 1</button>
+     <button onClick ={()=> setPage(2)}>Page 2</button>
+     <button onClick ={()=> setPage(3)}>Page 3</button>
       {status === 'error' && (
           <div>Error fetching data </div>
       )}
